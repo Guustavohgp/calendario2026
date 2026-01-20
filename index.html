@@ -16,40 +16,33 @@
     }
 
     body.light{
-      --bg:#f8fafc;
-      --card:#ffffff;
-      --border:#cbd5f5;
-      --text:#020617;
+      --bg:#f1f5f9;       /* fundo geral claro */
+      --card:#020617;     /* calendário permanece escuro */
+      --border:#1e293b;
+      --text:#020617;     /* texto fora do calendário */
       --muted:#475569;
-    }
-
-    h1 { text-align:center; margin-bottom:6px; font-weight:600; }
-    .subtitle { text-align:center; color:#94a3b8; margin-bottom:20px; }
+    }tom:20px; }
 
     .calendar-container {
       max-width:1080px;
       margin:0 auto;
       background:#020617;
       padding:24px;
+      border-ra.calendar-container {
+      max-width:1080px;
+      margin:0 auto;
+      background:var(--card);
+      padding:24px;
       border-radius:14px;
       box-shadow:0 20px 40px rgba(0,0,0,.45);
-    }
-
-    /* ================= CONFIG ================= */
-    .config {
-      border:1px solid #1e293b;
-      border-radius:12px;
-      padding:16px;
-      margin-bottom:22px;
+    }-bottom:22px;
     }
 
     .config h2 { margin:0 0 12px; font-size:16px; font-weight:500; }
 
     .hobby-list {
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:10px;
-    }
+      grid-template-columns: repeat(5, 1 }
 
     .hobby-item {
       background:#020617;
@@ -62,16 +55,11 @@
       transition:.2s;
     }
 
-    .hobby-item.active { border-color:#38bdf8; background:#020617; }
-
-    .config small { display:block; margin-top:10px; color:#64748b; }
-
-    /* ================= NAV ================= */
+    .hobby-item.active { border-color:#38bdf8; backgroundconfig small { display:block; margin-top:10px; color:#64748b===== NAV ================= */
     .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
 
     button {
-      background:#020617;
-      border:1px solid #1e293b;
+      background:#02:1px solid #1e293b;
       color:#e5e7eb;
       padding:8px 16px;
       border-radius:10px;
@@ -81,13 +69,9 @@
 
     .month-title { font-size:22px; font-weight:500; }
 
-    .weekdays, .days { display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; }
-    .weekdays div { text-align:center; font-size:12px; color:#64748b; }
-
-    .day {
-      background:#020617;
-      border:1px solid #1e293b;
-      min-height:120px;
+    .weekdays, .days { display:grid; grid-templt(7, 1fr); gap:8px; }
+    .weekdays div { text-align:center; font-size:12px; color:#64748bckground:#020617;
+      border:1px sol     min-height:120px;
       padding:6px;
       border-radius:10px;
       display:flex;
@@ -97,11 +81,16 @@
 
     .day-number { font-size:11px; color:#64748b; }
 
-    .habit { display:flex; align-items:center; gap:6px; font-size:11px; text-transform:capitalize; }
-
-    input[type="checkbox"]{
-      appearance:none; width:14px; height:14px; border-radius:4px; border:1px solid #475569;
-      cursor:pointer; display:inline-grid; place-content:center;
+    .habit { display:flex; align-items:ce.day {
+      background:var(--card);
+      border:1px solid var(--border);
+      min-height:120px;
+      padding:6px;
+      border-radius:10px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    };
     }
 
     input[type="checkbox"]::before{
@@ -125,12 +114,13 @@
 </head>
 <body>
 
-<h1>Calendário de Hábitos 2026</h1>
-<div class="subtitle">Sistema flexível • até 4 hábitos personalizados</div>
-
-<button id="themeToggle" style="float:right;margin-bottom:10px">🌙 / ☀</button>
-
-<div class="calendar-container">
+.stat {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px;
+      text-align:center;
+    }" style="float:right;margin-bottom:10px">ass="calendar-container">
 
   <!-- CONFIGURAÇÃO DE HÁBITOS -->
   <div class="config">
