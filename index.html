@@ -7,29 +7,36 @@
     * { box-sizing: border-box; font-family: Inter, Arial, sans-serif; }
     body { margin:0; padding:30px; background:var(--bg); color:var(--text); }
 
-    :root{
+  :root{
     /* Página */
-      --bg:#0b0f1a;
-      --text:#e5e7eb;
-      --muted:#94a3b8;
+    --bg:#0b0f1a;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
 
-    /* Calendário (FIXO) */
-      --cal-bg:#020617;
-      --cal-border:#1e293b;
-      --cal-text:#e5e7eb;
-      --cal-muted:#64748b;
-}
+    /* Cards / calendário */
+    --cal-bg:#020617;
+    --cal-border:#1e293b;
+    --cal-text:#e5e7eb;
+    --cal-muted:#64748b;
 
-    body.light{
-      --bg:#f1f5f9;        /* fundo claro */
-      --text:#020617;     /* texto fora do calendário */
-      --muted:#475569;
+    --card:#020617;
+    --border:#1e293b;
+  }
 
-    /* calendário NÃO muda */
-      --cal-bg:#020617;
-      --cal-border:#1e293b;
-      --cal-text:#e5e7eb;
-      --cal-muted:#64748b;
+  body.light{
+    /* Página */
+    --bg:#ffffff;
+    --text:#000000;
+    --muted:#334155;
+
+    /* Calendário agora FICA CLARO */
+    --cal-bg:#ffffff;
+    --cal-border:#cbd5e1;
+    --cal-text:#000000;
+    --cal-muted:#475569;
+
+    --card:#ffffff;
+    --border:#cbd5e1;
   }
 
 
@@ -62,9 +69,10 @@
       gap:10px;
     }
 
-    .hobby-item {
-      background:#020617;
-      border:1px solid #1e293b;
+    .hobby-item{
+      background:var(--card);
+      border:1px solid var(--border);
+      color:var(--text);
       border-radius:10px;
       padding:10px;
       font-size:12px;
@@ -73,7 +81,14 @@
       transition:.2s;
     }
 
-    .hobby-item.active { border-color:#38bdf8; background:#020617; }
+    /* quando ativo → usa a cor do hábito */
+    .hobby-item.active{
+      background: var(--hobby-color);
+      border-color: var(--hobby-color);
+      color: #ffffff;
+    }
+
+
 
     .config small { display:block; margin-top:10px; color:#64748b; }
 
@@ -220,6 +235,7 @@ function renderHobbyConfig(){
   ALL_HOBBIES.forEach(h=>{
     const div=document.createElement('div');
     div.className='hobby-item'+(activeHobbies.includes(h.id)?' active':'');
+    div.style.setProperty('--hobby-color', h.color);
     div.innerText=h.name;
     div.onclick=()=>toggleHobby(h.id);
     list.appendChild(div);
