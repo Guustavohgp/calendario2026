@@ -5,18 +5,29 @@
   <title>Calendário de Hábitos 2026</title>
   <style>
     * { box-sizing: border-box; font-family: Inter, Arial, sans-serif; }
-    body {
-      background:#0b0f1a;
-      color:#e5e7eb;
-      margin:0;
-      padding:30px;
+    body { margin:0; padding:30px; background:var(--bg); color:var(--text); }
+
+    :root{
+      --bg:#0b0f1a;
+      --card:#020617;
+      --border:#1e293b;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+    }
+
+    body.light{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --border:#cbd5f5;
+      --text:#020617;
+      --muted:#475569;
     }
 
     h1 { text-align:center; margin-bottom:6px; font-weight:600; }
     .subtitle { text-align:center; color:#94a3b8; margin-bottom:20px; }
 
     .calendar-container {
-      max-width:1020px;
+      max-width:1080px;
       margin:0 auto;
       background:#020617;
       padding:24px;
@@ -24,12 +35,39 @@
       box-shadow:0 20px 40px rgba(0,0,0,.45);
     }
 
-    .nav {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:18px;
+    /* ================= CONFIG ================= */
+    .config {
+      border:1px solid #1e293b;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:22px;
     }
+
+    .config h2 { margin:0 0 12px; font-size:16px; font-weight:500; }
+
+    .hobby-list {
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+    }
+
+    .hobby-item {
+      background:#020617;
+      border:1px solid #1e293b;
+      border-radius:10px;
+      padding:10px;
+      font-size:12px;
+      cursor:pointer;
+      text-align:center;
+      transition:.2s;
+    }
+
+    .hobby-item.active { border-color:#38bdf8; background:#020617; }
+
+    .config small { display:block; margin-top:10px; color:#64748b; }
+
+    /* ================= NAV ================= */
+    .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
 
     button {
       background:#020617;
@@ -43,95 +81,44 @@
 
     .month-title { font-size:22px; font-weight:500; }
 
-    .weekdays, .days {
-      display:grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap:8px;
-    }
-
-    .weekdays div {
-      text-align:center;
-      font-size:12px;
-      letter-spacing:0.5px;
-      color:#64748b;
-    }
+    .weekdays, .days { display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; }
+    .weekdays div { text-align:center; font-size:12px; color:#64748b; }
 
     .day {
       background:#020617;
       border:1px solid #1e293b;
-      min-height:110px;
+      min-height:120px;
       padding:6px;
       border-radius:10px;
       display:flex;
       flex-direction:column;
       gap:6px;
-      transition:.2s;
     }
-
-    .day:hover { border-color:#334155; }
 
     .day-number { font-size:11px; color:#64748b; }
 
-    .habit {
-      display:flex;
-      align-items:center;
-      gap:6px;
-      font-size:11px;
-      text-transform:capitalize;
-    }
+    .habit { display:flex; align-items:center; gap:6px; font-size:11px; text-transform:capitalize; }
 
     input[type="checkbox"]{
-  appearance:none;
-  width:14px;
-  height:14px;
-  border-radius:4px;
-  border:1px solid #475569;
-  cursor:pointer;
-  display:inline-grid;
-  place-content:center;
-}
-
-input[type="checkbox"]::before{
-  content:"";
-  width:8px;
-  height:8px;
-  transform:scale(0);
-  transition:transform .12s ease-in-out;
-  border-radius:2px;
-}
-
-input[type="checkbox"]:checked::before{
-  transform:scale(1);
-}
-
-    /* Cores dos hábitos */
-.academia:checked::before{ background:#22c55e; }
-.leitura:checked::before{ background:#38bdf8; }
-.estudos:checked::before{ background:#a855f7; }
-.youtube:checked::before{ background:#ef4444; }
-
-.academia{ border-color:#22c55e; }
-.leitura{ border-color:#38bdf8; }
-.estudos{ border-color:#a855f7; }
-.youtube{ border-color:#ef4444; }
-
-    .stats {
-      margin-top:24px;
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:14px;
+      appearance:none; width:14px; height:14px; border-radius:4px; border:1px solid #475569;
+      cursor:pointer; display:inline-grid; place-content:center;
     }
 
+    input[type="checkbox"]::before{
+      content:""; width:8px; height:8px; transform:scale(0); transition:.12s; border-radius:2px;
+    }
+
+    input[type="checkbox"]:checked::before{ transform:scale(1); }
+
+    /* ================= STATS ================= */
+    .stats { margin-top:24px; display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
+
     .stat {
-      background:#020617;
-      border:1px solid #1e293b;
-      border-radius:12px;
-      padding:16px;
-      text-align:center;
+      background:#020617; border:1px solid #1e293b; border-radius:12px; padding:16px; text-align:center;
     }
 
     .stat h3 { margin:0; font-size:13px; color:#94a3b8; font-weight:500; }
-    .stat p  { margin:6px 0 0; font-size:20px; font-weight:600; }
+    .stat p { margin:6px 0 0; font-size:18px; font-weight:600; }
 
     .empty { background:transparent; border:none; }
   </style>
@@ -139,8 +126,19 @@ input[type="checkbox"]:checked::before{
 <body>
 
 <h1>Calendário de Hábitos 2026</h1>
+<div class="subtitle">Sistema flexível • até 4 hábitos personalizados</div>
+
+<button id="themeToggle" style="float:right;margin-bottom:10px">🌙 / ☀</button>
 
 <div class="calendar-container">
+
+  <!-- CONFIGURAÇÃO DE HÁBITOS -->
+  <div class="config">
+    <h2>Escolha até 4 hábitos</h2>
+    <div class="hobby-list" id="hobbyList"></div>
+    <small>* Você pode trocar os hábitos a qualquer momento. O limite é 4.</small>
+  </div>
+
   <div class="nav">
     <button id="prev">⬅</button>
     <div class="month-title" id="monthTitle"></div>
@@ -152,81 +150,155 @@ input[type="checkbox"]:checked::before{
   </div>
 
   <div class="days" id="days"></div>
-
-  <div class="stats">
-    <div class="stat"><h3>🏋️ Academia</h3><p><span id="academiaCount">0</span> dias (<span id="academiaPct">0</span>%)</p></div>
-    <div class="stat"><h3>📚 Leitura</h3><p><span id="leituraCount">0</span> dias (<span id="leituraPct">0</span>%)</p></div>
-    <div class="stat"><h3>🧠 Estudos</h3><p><span id="estudosCount">0</span> dias (<span id="estudosPct">0</span>%)</p></div>
-    <div class="stat"><h3>🎬 YouTube</h3><p><span id="youtubeCount">0</span> dias (<span id="youtubePct">0</span>%)</p></div>
-  </div>
+  <div class="stats" id="stats"></div>
 </div>
 
 <script>
 const year = 2026;
-let currentMonth = 0;
 
-const habits = ['academia','leitura','estudos','youtube'];
-const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+// ================= THEME =================
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if(savedTheme === 'light') document.body.classList.add('light');
+
+document.getElementById('themeToggle').onclick = () => {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+};
+let currentMonth = 0;
 const totalDaysYear = 365;
+
+// Lista fixa de hobbies (10 mais comuns)
+const ALL_HOBBIES = [
+  {id:'academia', name:'Academia', color:'#22c55e'},
+  {id:'leitura',  name:'Leitura',  color:'#38bdf8'},
+  {id:'estudos',  name:'Estudos',  color:'#a855f7'},
+  {id:'youtube',  name:'YouTube',  color:'#ef4444'},
+  {id:'meditacao',name:'Meditação',color:'#facc15'},
+  {id:'corrida',  name:'Corrida',  color:'#fb923c'},
+  {id:'musica',   name:'Música',   color:'#0ea5e9'},
+  {id:'idiomas',  name:'Idiomas',  color:'#10b981'},
+  {id:'escrita',  name:'Escrita',  color:'#e879f9'},
+  {id:'sono',     name:'Sono',     color:'#64748b'},
+
+  {id:'caminhada', name:'Caminhada', color:'#16a34a'},
+  {id:'yoga', name:'Yoga', color:'#9333ea'},
+  {id:'alongamento', name:'Alongamento', color:'#14b8a6'},
+  {id:'programacao', name:'Programação', color:'#1e293b'},
+  {id:'desenho', name:'Desenho', color:'#f97316'},
+  {id:'fotografia', name:'Fotografia', color:'#64748b'},
+  {id:'alimentacao', name:'Alimentação saudável', color:'#65a30d'},
+  {id:'espiritual', name:'Leitura espiritual', color:'#a855f7'},
+  {id:'organizacao', name:'Organização pessoal', color:'#0284c7'},
+  {id:'journaling', name:'Journaling (diário)', color:'#92400e'}
+];
+
+let activeHobbies = JSON.parse(localStorage.getItem('activeHobbies')) || ['academia','leitura','estudos','youtube'];
+
+const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
 function key(date, habit){ return `habit-${habit}-${date}`; }
 
+/* ================= CONFIG UI ================= */
+function renderHobbyConfig(){
+  const list = document.getElementById('hobbyList');
+  list.innerHTML='';
+
+  ALL_HOBBIES.forEach(h=>{
+    const div=document.createElement('div');
+    div.className='hobby-item'+(activeHobbies.includes(h.id)?' active':'');
+    div.innerText=h.name;
+    div.onclick=()=>toggleHobby(h.id);
+    list.appendChild(div);
+  });
+}
+
+function toggleHobby(id){
+  if(activeHobbies.includes(id)){
+    activeHobbies = activeHobbies.filter(h=>h!==id);
+  } else {
+    if(activeHobbies.length>=4) return alert('Máximo de 4 hábitos');
+    activeHobbies.push(id);
+  }
+  localStorage.setItem('activeHobbies', JSON.stringify(activeHobbies));
+  renderHobbyConfig();
+  renderCalendar();
+}
+
+/* ================= CALENDAR ================= */
 function renderCalendar(){
   const daysEl = document.getElementById('days');
-  daysEl.innerHTML = '';
-  document.getElementById('monthTitle').innerText = `${monthNames[currentMonth]} / ${year}`;
+  daysEl.innerHTML='';
+  document.getElementById('monthTitle').innerText=`${monthNames[currentMonth]} / ${year}`;
 
-  const firstDay = new Date(year, currentMonth, 1).getDay();
-  const totalDays = new Date(year, currentMonth + 1, 0).getDate();
+  const firstDay=new Date(year,currentMonth,1).getDay();
+  const totalDays=new Date(year,currentMonth+1,0).getDate();
 
   for(let i=0;i<firstDay;i++){
-    const e = document.createElement('div');
-    e.className='day empty';
-    daysEl.appendChild(e);
+    const e=document.createElement('div'); e.className='day empty'; daysEl.appendChild(e);
   }
 
   for(let d=1; d<=totalDays; d++){
-    const dateStr = `${year}-${currentMonth+1}-${d}`;
-    const day = document.createElement('div'); day.className='day';
+    const dateStr=`${year}-${currentMonth+1}-${d}`;
+    const day=document.createElement('div'); day.className='day';
 
-    const num = document.createElement('div'); num.className='day-number'; num.innerText=d;
+    const num=document.createElement('div'); num.className='day-number'; num.innerText=d;
     day.appendChild(num);
 
-    habits.forEach(h=>{
+    activeHobbies.forEach(hId=>{
+      const h=ALL_HOBBIES.find(x=>x.id===hId);
       const label=document.createElement('label'); label.className='habit';
-      const cb=document.createElement('input'); cb.type='checkbox'; cb.className=h;
-      cb.checked = localStorage.getItem(key(dateStr,h))==='true';
-      cb.onchange=()=>{ localStorage.setItem(key(dateStr,h),cb.checked); updateStats(); };
+
+      const cb=document.createElement('input'); cb.type='checkbox'; cb.style.borderColor=h.color;
+      cb.checked = localStorage.getItem(key(dateStr,hId))==='true';
+      cb.onchange=()=>{ localStorage.setItem(key(dateStr,hId),cb.checked); updateStats(); };
+      cb.style.setProperty('--color', h.color);
+      cb.classList.add('cb-'+hId);
+
+      cb.style.setProperty('--color', h.color);
+      cb.style.background='transparent';
+      cb.onchange=()=>{ localStorage.setItem(key(dateStr,hId),cb.checked); updateStats(); };
+
+      cb.addEventListener('change',()=>{
+        if(cb.checked) cb.style.background=h.color;
+        else cb.style.background='transparent';
+      });
+
+      if(cb.checked) cb.style.background=h.color;
+
       label.appendChild(cb);
-      label.appendChild(document.createTextNode(h));
+      label.appendChild(document.createTextNode(h.name));
       day.appendChild(label);
     });
 
     daysEl.appendChild(day);
   }
+
   updateStats();
 }
 
+/* ================= STATS ================= */
 function updateStats(){
-  let count={academia:0,leitura:0,estudos:0,youtube:0};
-  Object.keys(localStorage).forEach(k=>{
-    if(k.startsWith('habit-') && localStorage.getItem(k)==='true'){
-      if(k.includes('academia')) count.academia++;
-      if(k.includes('leitura')) count.leitura++;
-      if(k.includes('estudos')) count.estudos++;
-      if(k.includes('youtube')) count.youtube++;
-    }
-  });
+  const stats=document.getElementById('stats');
+  stats.innerHTML='';
 
-  habits.forEach(h=>{
-    document.getElementById(h+'Count').innerText = count[h];
-    document.getElementById(h+'Pct').innerText = Math.round((count[h]/totalDaysYear)*100);
+  activeHobbies.forEach(hId=>{
+    const h=ALL_HOBBIES.find(x=>x.id===hId);
+    let count=0;
+
+    Object.keys(localStorage).forEach(k=>{
+      if(k.startsWith(`habit-${hId}-`) && localStorage.getItem(k)==='true') count++;
+    });
+
+    const div=document.createElement('div'); div.className='stat';
+    div.innerHTML=`<h3>${h.name}</h3><p>${count} dias (${Math.round((count/totalDaysYear)*100)}%)</p>`;
+    stats.appendChild(div);
   });
 }
 
 prev.onclick=()=>{ if(currentMonth>0){currentMonth--;renderCalendar();} };
 next.onclick=()=>{ if(currentMonth<11){currentMonth++;renderCalendar();} };
 
+renderHobbyConfig();
 renderCalendar();
 </script>
 
